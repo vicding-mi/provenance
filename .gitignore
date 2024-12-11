@@ -1,0 +1,19 @@
+# IDE files
+.idea
+
+# react interface
+interface
+
+# log and temp files
+log
+postgres
+test.py
+
+# ignore generate files and source files
+*.csv
+*.sql
+
+# Ignore zip files
+*.sql.gz
+*.zip
+*.tgz

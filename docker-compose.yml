@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: secretpass
+      POSTGRES_PASSWORD: secretpass
+      POSTGRES_DB: secretpass
+#      POSTGRES_ROOT_PASSWORD: secretpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+#      - ./hi_republic_provenance-20241203.sql:/tmp/input.sql
+      - ./output.sql:/tmp/output.sql
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+
+  provenance:
+    image: provenance:latest
+    container_name: provenance
+    restart: unless-stopped
+    environment:
+      - PROVENANCE_DATABASE_HOST=postgres
+      - PROVENANCE_DATABASE_USER=secretpass
+      - PROVENANCE_DATABASE_PASSWORD=secretpass
+      - PROVENANCE_DATABASE_DB=secretpass
+    ports:
+      - "3030:8080"
